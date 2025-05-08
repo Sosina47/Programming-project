@@ -1,7 +1,8 @@
 #include <iostream>
+#include <vector>
 using namespace std; 
 
-class books {
+class book {
     public: 
         int ID;
         string title; 
@@ -9,21 +10,28 @@ class books {
         int publication_year; 
 };
 
-void getBook (books book[], int size) {
+void addBook (vector <book> &books) {
+    int size; 
+    cout<<"how many books do you want to add: "; 
+    cin>>size; 
     for (int i=0; i<size; i++) {
+        book temp; 
         cout<<"enter book id: ";
-        cin>>book[i].ID;
+        cin>>temp.ID; 
         cout<<"enter book title: ";
         cin.ignore(1000, '\n'); 
-        getline(cin, book[i].title); 
+        getline(cin, temp.title); 
         cout<<"enter book author: ";
-        getline(cin, book[i].author);
+        getline(cin, temp.author);
         cout<<"enter book publication year: ";
-        cin>>book[i].publication_year;
+        cin>>temp.publication_year;
+
+        books.push_back(temp); 
     }
+    cout<<"Book is added successfully!"<<endl; 
 }
 
-void updateBook (books book[], int size) {
+void updateBook (vector <book>& books) {
     int book_id; 
     int index; // holds the position for the book to be updated
     bool id_found = false; // to check if the book id is valid 
@@ -32,8 +40,8 @@ void updateBook (books book[], int size) {
         cout<<"enter the id of the book you want to update: "; 
         cin>>book_id; 
     
-        for(int i=0; i<size; i++) {
-            if (book[i].ID == book_id) {
+        for(int i=0; i<books.size(); i++) {
+            if (books[i].ID == book_id) {
                 id_found = true; 
                 index = i;
             }
@@ -50,40 +58,79 @@ void updateBook (books book[], int size) {
 
     if (option == 1) {
         cout<<"enter the new id: ";
-        cin>>book[index].ID; 
+        cin>>books[index].ID; 
 
     } else if (option == 2) {
         cout<<"enter the new title: ";
         cin.ignore(1000, '\n'); 
-        getline(cin, book[index].title);  
+        getline(cin, books[index].title);  
         
     } else if (option == 3) {
         cout<<"enter the new author: "; 
         cin.ignore(1000, '\n'); 
-        getline(cin, book[index].author);  
+        getline(cin, books[index].author);  
 
     } else if (option == 4) {
         cout<<"enter the new publication year: "; 
-        cin>>book[index].publication_year; 
+        cin>>books[index].publication_year; 
     } else {
         cout<<"invalid input! please try again. "<<endl; 
         goto label; 
     }
 }
 
-int main () {
-    int size = 5;
-    books book[size];
-    getBook(book, size); 
+void removeBook (vector <book>& books) {
+    int ID; 
+    char confirmation; 
+    bool id_found = false; 
+    int index; 
 
-    // updating the books
+    while(!id_found) {
+        cout<<"enter the book ID you want to delete: "; 
+        cin>> ID;
+        for (int i=0; i<books.size(); i++) {
+            if(books[i].ID == ID) {
+                id_found = true; 
+                index = i; 
+            }
+        }
+        if(!id_found) {
+            cout<<"Invalid ID. Please try again."<<endl; 
+        }
+    }
+
+    cout<<"Are you sure you want to delete the book with ID "<<ID<<" ? "<<endl; 
+    cout<<"Press y for yes and any other key for no: "; 
+    cin>>confirmation; 
+
+    if(confirmation == 'Y' || confirmation == 'y') {
+        books.erase(books.begin() + index); 
+        cout<<"You've deleted the book successfully!"; 
+    } else {
+        cout<<"No book is deleted. "<<endl; 
+    }
+}
+
+
+
+int main () {
+    vector <book> books;
     int option; 
-    cout<<"if you want to update the books press 1, if you don't press any other key: ";
+
+    cout<<" to update books press 1 \n to add books press 2 \n to delete books press 3: ";
     cin>>option; 
 
     if (option == 1) {
-        updateBook(book, size); 
+        updateBook(books); 
+    } else if (option == 2) {
+        addBook(books); 
+    } else if(option == 3) {
+        removeBook(books); 
+    } else {
+        cout<<"Invalid input!"<<endl; 
     }
+
+    // display book will be added
 
     return 0; 
 }
