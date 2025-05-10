@@ -2,7 +2,37 @@
 #include <vector>
 using namespace std; 
 
-void addMember (vector <member>& members) {
+struct borrowing_history {
+    string borrowed_date; 
+    int book_id; 
+};
+
+class member {
+    public: 
+        int ID; 
+        string name; 
+        string status; 
+        vector<borrowing_history>borrowed; 
+};
+
+
+template<typename T>
+bool bookMatchingId (vector<T>books, int id, int& index) {
+    // checks if the id is valid
+    bool id_found = false; 
+    for (int i=0; i<books.size(); i++) {
+        if (books[i].ID == id) {
+            index = i; 
+            id_found = true; 
+            break;  
+        }
+    }
+    return id_found; 
+
+}
+
+// add new members
+void addMember (vector<member>& members) {
     int size; 
     bool found;
     cout<<"how many members do you want to add: ";
@@ -12,17 +42,17 @@ void addMember (vector <member>& members) {
         member temp;
 
         do {
-            found = true; 
+            found = false; 
             cout<<"enter member "<<i+1<<" ID: "; 
             cin>>temp.ID; 
             for(int i=0; i<members.size(); i++) {
                 if (members[i].ID == temp.ID) {
                     cout<<"ID already exists. Please insert another ID."<<endl; 
-                    found = false; 
+                    found = true; 
                     break; 
                 }
             }
-        } while(!found); 
+        } while(found); 
 
         cout<<"member "<<i+1<<" name: "; 
         cin.ignore(1000, '\n'); 
@@ -33,16 +63,16 @@ void addMember (vector <member>& members) {
             cin>>temp.status; 
         } while(temp.status != "active" && temp.status != "passive"); 
 
+        borrowing_history tempp; 
+
         cout<<"enter the date a member "<<i+1<<" borrowed a book: "; 
         cin.ignore(1000, '\n'); 
-        string date; 
-        getline(cin, date); 
-        temp.borrowed.borrowed_date.push_back(date); 
+        getline(cin, tempp.borrowed_date); 
 
         cout<<"enter the ID of a book the member "<<i+1<<" borrowed: "; 
-        int ID; 
-        cin>>ID; 
-        temp.borrowed.book_id.push_back(ID); 
+        cin>>tempp.book_id; 
+
+        temp.borrowed.push_back(tempp); 
 
         members.push_back(temp); 
         cout<<"Member is added successfully. "<<endl; 
@@ -51,25 +81,35 @@ void addMember (vector <member>& members) {
 
 
 // updates members information 
-void updateMember(vector <member>& members) {
+void updateMember(vector<member>& members) {
     int mbr_id; 
-    bool id_found = false; 
     int index; 
 
-    while (!id_found) {
+    while (true) {
         cout<<"Enter the members id you want to make changes: ";
-        cin>>mbr_id; 
+        cin>>mbr_id;
 
-        for (int i=0; i<members.size(); i++) {
-            if (members[i].ID == mbr_id) {
-                index = i; 
-                id_found = true; 
-            }
-        }
-        if (!id_found) {
+        if (bookMatchingId<member> (members, mbr_id, index)) {
+            break; 
+        } else {
             cout<<"Invalid Id. Please try again."<<endl; 
         }
     }
+
+    // while (!id_found) {
+    //     cout<<"Enter the members id you want to make changes: ";
+    //     cin>>mbr_id; 
+
+    //     for (int i=0; i<members.size(); i++) {
+    //         if (members[i].ID == mbr_id) {
+    //             index = i; 
+    //             id_found = true; 
+    //         }
+    //     }
+    //     if (!id_found) {
+    //         cout<<"Invalid Id. Please try again."<<endl; 
+    //     }
+    // }
 
     int option; 
     label2:
@@ -77,8 +117,19 @@ void updateMember(vector <member>& members) {
     cin>>option; 
 
     if (option == 1) {
-        cout<<"Enter the new ID: "; 
-        cin>>members[index].ID; 
+        int new_id, new_index;  
+        // checks if the id is assigned to another member
+        while (true) {
+            cout<<"Enter the new ID: "; 
+            cin>>new_id;
+            if (!bookMatchingId<member> (members, new_id, new_index)) {
+                members[index].ID = new_id; 
+                break; 
+            } else {
+                cout<<"The ID is already taken. Please choose another ID."<<endl;
+            }
+        }
+        
         
     } else if (option == 2) {
         cout<<"Enter the new name: "; 
@@ -92,19 +143,25 @@ void updateMember(vector <member>& members) {
     } else if (option == 4) {
         int ID, bk_index;
         while(true) { 
-            cout<<"enter borrowed book ID: "; 
+            bool br_bK_found = false; 
+            cout<<"enter borrowed book ID to update the date: "; 
             cin>>ID; 
-            for (int i=0; i<members.size(); i++) {
-                if (members[i].ID == ID) {
+            for (int i=0; i < members[index].borrowed.size(); i++) {
+                if (members[index].borrowed[i].book_id == ID) {
                     bk_index = i; 
-                    break;
+                    br_bK_found = true; 
+                    break; 
                 }
             }
+            if (br_bK_found) {
+                break; 
+            } 
             cout<<"invalid borrowed book ID. please try again."<<endl; 
         }
 
         cout<<"Enter new borrowed book date: "; 
-        cin>>members[index].borrowed.borrowed_date[bk_index]; 
+        cin.ignore(1000, '\n'); 
+        getline(cin, members[index].borrowed[bk_index].borrowed_date);  
 
     } else {
         cout<<"Invalid input. Please try again."<<endl;
@@ -112,8 +169,8 @@ void updateMember(vector <member>& members) {
     }
 }
 
-
-void removeMember (vector <member>& members) {
+// remove member
+void removeMember (vector<member>& members) {
     int size; 
     while (true) {
         cout<<"How many members do you want to remove: "; 
@@ -128,23 +185,33 @@ void removeMember (vector <member>& members) {
 
     for (int i=0; i<size; i++) {
         int ID, index; 
-        bool id_found = false; 
 
-        while(!id_found) {
+        while (true) {
             cout<<"enter member "<<i+1<<" ID you want to remove: ";
-            cin>>ID;
+            cin>>ID; 
 
-            for (int j=0; j<members.size(); j++) {
-                if (members[j].ID == ID) {
-                    index = j; 
-                    id_found = true; 
-                    break;
-                }
-            }
-            if (!id_found) {
-                cout<<"Please enter a valid members input."<<endl; 
+            if (bookMatchingId<member>(members, ID, index)) {
+                break;
+            } else {
+                cout<<"Please enter a valid member ID."<<endl; 
             }
         }
+
+        // while(!id_found) {
+        //     cout<<"enter member "<<i+1<<" ID you want to remove: ";
+        //     cin>>ID;
+
+        //     for (int j=0; j<members.size(); j++) {
+        //         if (members[j].ID == ID) {
+        //             index = j; 
+        //             id_found = true; 
+        //             break;
+        //         }
+        //     }
+        //     if (!id_found) {
+        //         cout<<"Please enter a valid members input."<<endl; 
+        //     }
+        // }
 
         char confirmation;
         cout<<"Are you sure you want to delete the member with id "<<ID<<endl;
@@ -162,27 +229,36 @@ void removeMember (vector <member>& members) {
 
 
 // displays members information 
-void displayMember (vector <member> members) {
+void displayMember (vector<member>members) {
     int ID, index;
-    bool id_found = false; 
 
-    while (!id_found) {
+    while (true) {
         cout<<"Enter members ID you want to see history of: "; 
-        cin>>index; 
-        for(int i=0; i<members.size(); i++) {
-            if (members[i].ID == ID) {
-                index = i; 
-                id_found = true;
-                break; 
-            }
-            if (i == members.size() - 1) {
-                cout<<"Invalid ID! Please try again."<<endl; 
-            }
+        cin>>ID; 
+
+        if (bookMatchingId<member>(members, ID, index)) {
+            break; 
+        } else {
+            cout<<"Invalid ID! Please try again."<<endl;
         }
     }
 
+    // while (!id_found) {
+        
+    //     for(int i=0; i<members.size(); i++) {
+    //         if (members[i].ID == ID) {
+    //             index = i; 
+    //             id_found = true;
+    //             break; 
+    //         }
+    //         if (i == members.size() - 1) {
+    //             cout<<"Invalid ID! Please try again."<<endl; 
+    //         }
+    //     }
+    // }
+
     cout<<"ID       NAME        STATUS      BORROWED BOOK"<<endl; 
     cout<<"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ "<<endl;
-    cout<<members[index].ID<<"      "<<members[index].name<<"       "<<members[index].status<<"     "<<members[index].borrowed.book_id.size()<<endl;
+    cout<<members[index].ID<<"      "<<members[index].name<<"       "<<members[index].status<<"     "<<members[index].borrowed.size()<<endl;
     cout<<"_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ "<<endl;
 }
