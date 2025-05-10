@@ -16,8 +16,23 @@ void addBook (vector <book> &books) {
     cin>>size; 
     for (int i=0; i<size; i++) {
         book temp; 
-        cout<<"enter book id: ";
-        cin>>temp.ID; 
+        while (true) {
+            bool found = false; 
+            cout<<"enter book id: ";
+            cin>>temp.ID;
+
+            for (int i=0; i<books.size(); i++) {
+                if(books[i].ID == temp.ID) {
+                    found = true; 
+                    break; 
+                }
+            }
+            if(!found) {
+                break; 
+            }
+            cout<<"The ID is already taken. Please try again. "<<endl; 
+        }
+         
         cout<<"enter book title: ";
         cin.ignore(1000, '\n'); 
         getline(cin, temp.title); 
@@ -57,8 +72,25 @@ void updateBook (vector <book>& books) {
     cin>>option; 
 
     if (option == 1) {
-        cout<<"enter the new id: ";
-        cin>>books[index].ID; 
+        int new_id;
+        while (true) {
+            bool found = false;  
+            cout<<"enter the new id: ";
+            cin>>new_id; 
+
+            for (int i=0; i<books.size(); i++) {
+                if(books[i].ID == new_id) {
+                    found = true; 
+                    break; 
+                }
+            }
+            if (!found) {
+                break; 
+            }
+            cout<<"The ID is already taken. Please try again"<<endl; 
+        }
+        
+        books[index].ID = new_id; 
 
     } else if (option == 2) {
         cout<<"enter the new title: ";
@@ -115,6 +147,27 @@ void removeBook (vector <book>& books) {
 
 int main () {
     vector <book> books;
+
+    book temp;
+    temp.ID = 1; 
+    temp.title = "english"; 
+    temp.author = "sosina"; 
+    temp.publication_year = 2004; 
+    books.push_back(temp); 
+
+    temp.ID = 2; 
+    temp.title = "math"; 
+    temp.author = "sara"; 
+    temp.publication_year = 2003;
+    books.push_back(temp); 
+
+    temp.ID = 3; 
+    temp.title = "biology"; 
+    temp.author = "saron"; 
+    temp.publication_year = 2005;
+    books.push_back(temp); 
+    
+
     int option; 
 
     cout<<" to update books press 1 \n to add books press 2 \n to delete books press 3: ";
