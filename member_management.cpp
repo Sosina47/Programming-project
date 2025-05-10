@@ -3,23 +3,37 @@
 #include <vector> 
 using namespace std; 
 
-class borrowing_history {
-    public: 
-        vector <string> borrowed_date;  
-        vector <int> book_id;
-};
-
-class member {
-    public: 
-        int ID; 
-        string name; 
-        string status; 
-        borrowing_history borrowed; 
-};
-
 
 int main () {
     vector <member> members; 
+
+    member temp; 
+    borrowing_history tempp; 
+
+    temp.ID = 1; 
+    temp.name = "sosi"; 
+    temp.status = "active"; 
+    tempp.borrowed_date = "01-01-2025"; 
+    tempp.book_id = 1; 
+    temp.borrowed.push_back(tempp); 
+    members.push_back(temp); 
+
+    temp.ID = 2; 
+    temp.name = "senpair"; 
+    temp.status = "active"; 
+    tempp.borrowed_date = "01-02-2025"; 
+    tempp.book_id = 2; 
+    temp.borrowed.push_back(tempp); 
+    members.push_back(temp); 
+
+    temp.ID = 3; 
+    temp.name = "selam"; 
+    temp.status = "active"; 
+    tempp.borrowed_date = "05-01-2025"; 
+    tempp.book_id = 3; 
+    temp.borrowed.push_back(tempp); 
+    members.push_back(temp); 
+    
 
     int l_option; 
     label4: 
