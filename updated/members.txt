@@ -1,0 +1,100 @@
+1
+Alice Johnson
+Active
+Borrowed
+
+2
+Benjamin Carter
+Inactive
+Returned
+
+3
+Cynthia Lee
+Active
+Borrowed
+
+4
+Daniel Kim
+Inactive
+Returned
+
+5
+Ella Martinez
+Active
+Returned
+
+6
+Felix Thompson
+Active
+Borrowed
+
+7
+Grace O’Neill
+Inactive
+Returned
+
+8
+Henry Zhang
+Active
+Borrowed
+
+9
+Isla Patel
+Active
+Returned
+
+10
+Jack Rivera
+Inactive
+Returned
+
+11
+Kara Yu
+Active
+Borrowed
+
+12
+Liam Brooks
+Inactive
+Returned
+
+13
+Maya Fernandez
+Active
+Borrowed
+
+14
+Nathan Scott
+Active
+Returned
+
+15
+Olivia Green
+Inactive
+Returned
+
+16
+Paulina Clarke
+Active
+Borrowed
+
+17
+Quinn Davis
+Inactive
+Returned
+
+18
+Ryan Bell
+Active
+Borrowed
+
+19
+Sophia Moore
+Active
+Returned
+
+20
+Thomas White
+Inactive
+Returned
+

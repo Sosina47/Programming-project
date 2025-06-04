@@ -1,0 +1,158 @@
+1
+To Kill a Mockingbird
+Harper Lee
+1960
+
+2
+1984
+George Orwell
+1949
+
+3
+The Great Gatsby
+F. Scott Fitzgerald
+1925
+
+4
+Pride and Prejudice
+Jane Austen
+1813
+
+5
+Moby-Dick
+Herman Melville
+1851
+
+6
+The Catcher in the Rye
+J.D. Salinger
+1951
+
+7
+The Lord of the Rings
+J.R.R. Tolkien
+1954
+
+8
+The Hobbit
+J.R.R. Tolkien
+1937
+
+9
+Jane Eyre
+Charlotte Brontë
+1847
+
+10
+Brave New World
+Aldous Huxley
+1932
+
+11
+Animal Farm
+George Orwell
+1945
+
+12
+Wuthering Heights
+Emily Brontë
+1847
+
+13
+Crime and Punishment
+Fyodor Dostoevsky
+1866
+
+14
+War and Peace
+Leo Tolstoy
+1869
+
+15
+The Odyssey
+Homer
+-800
+
+16
+The Iliad
+Homer
+-750
+
+17
+A Tale of Two Cities
+Charles Dickens
+1859
+
+18
+Great Expectations
+Charles Dickens
+1861
+
+19
+The Brothers Karamazov
+Fyodor Dostoevsky
+1880
+
+20
+Frankenstein
+Mary Shelley
+1818
+
+21
+Dracula
+Bram Stoker
+1897
+
+22
+Les Misérables
+Victor Hugo
+1862
+
+23
+The Count of Monte Cristo
+Alexandre Dumas
+1844
+
+24
+Don Quixote
+Miguel de Cervantes
+1605
+
+25
+Fahrenheit 451
+Ray Bradbury
+1953
+
+26
+The Grapes of Wrath
+John Steinbeck
+1939
+
+27
+Of Mice and Men
+John Steinbeck
+1937
+
+28
+The Picture of Dorian Gray
+Oscar Wilde
+1890
+
+29
+Lolita
+Vladimir Nabokov
+1955
+
+30
+The Alchemist
+Paulo Coelho
+1988
+
+31
+twisted
+J.k
+2004
+31
+test
+test
+2000
